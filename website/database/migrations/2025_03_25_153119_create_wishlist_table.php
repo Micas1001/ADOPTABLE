@@ -10,15 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('animals', function (Blueprint $table) {
+        Schema::create('wishlist', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->enum('sexo', ['Macho', 'Fêmea']);
-            $table->integer('idade');
-            $table->string('localizacao');
-            $table->string('raça');
-            $table->string('imagem');
-            $table->string('especie');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('animal_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('animals');
+        Schema::dropIfExists('wishlist');
     }
 };

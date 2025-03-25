@@ -3,56 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registo</title>
+    <title>Criar Conta - Adoptable</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f3f3f3;
+            background-color: #f9f9f9;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        header {
+            background-color: #FE5101;
+            padding: 15px 30px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
         }
-        .register-container {
-            background: white;
+        header img {
+            height: 35px;
+        }
+        main {
+            max-width: 450px;
+            margin: 60px auto;
+            background-color: white;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            width: 350px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #FE5101;
+            margin-bottom: 25px;
+        }
+        .form-control:focus {
+            border-color: #FE5101;
+            box-shadow: 0 0 0 0.2rem rgba(254, 81, 1, 0.25);
+        }
+        .btn-custom {
+            background-color: #FE5101;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #d64500;
+        }
+        footer {
+            background-color: #FE5101;
+            color: white;
             text-align: center;
-        }
-        .register-container h3 {
-            margin-bottom: 20px;
-        }
-        .register-container input {
-            margin-bottom: 15px;
+            padding: 20px;
+            margin-top: 60px;
         }
     </style>
 </head>
 <body>
-    <header class="bg-dark text-white text-center p-3 w-100">
-        <h2>ADOPTABLE</h2>
+
+    <header>
+        <a href="{{ route('home') }}">
+            <img src="{{ asset('images/LOGO1.png') }}" alt="Adoptable Logo">
+        </a>
     </header>
 
-    <div class="register-container">
-        <h3>Criar Conta</h3>
-        <form action="{{ route('register') }}" method="POST">
+    <main>
+        <h2 class="text-center">Criar Conta</h2>
+        <form method="POST" action="{{ route('register') }}">
             @csrf
-            <input type="text" class="form-control" name="name" placeholder="Nome" required>
-            <input type="email" class="form-control" name="email" placeholder="Email" required>
-            <input type="password" class="form-control" name="password" placeholder="Password" required>
-            <input type="password" class="form-control" name="password_confirmation" placeholder="Confirmar Password" required>
-            <button type="submit" class="btn btn-primary w-100">Registar</button>
-        </form>
-        <p class="mt-3">Já tens conta? <a href="{{ route('login') }}">Entrar</a></p>
-    </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Nome</label>
+                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+            </div>
 
-    <footer class="bg-dark text-white text-center p-3 w-100 mt-5">
-        <p>&copy; 2025 ADOPTABLE - Todos os direitos reservados.</p>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input id="password" type="password" class="form-control" name="password" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password_confirmation" class="form-label">Confirmar Password</label>
+                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
+            </div>
+
+            <button type="submit" class="btn btn-custom w-100">Criar Conta</button>
+        </form>
+
+        <p class="text-center mt-3">Já tens conta?
+            <a href="{{ route('login') }}" class="text-decoration-none" style="color:#FE5101;">Fazer login</a>
+        </p>
+    </main>
+
+    <footer>
+        <p>&copy; {{ date('Y') }} Adoptable. Todos os direitos reservados.</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

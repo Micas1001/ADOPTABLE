@@ -42,44 +42,83 @@
             color: #FE5101;
             font-weight: bold;
         }
+        html {
+        scroll-behavior: smooth;
+
+        .wishlist-btn {
+            font-size: 1.2rem;
+            color: #fe5101;
+            background: none;
+            border: none;
+        }
+        .wishlist-btn:hover {
+            color: #c64400;
+        }
+    }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg bg-white shadow-sm">
-  <div class="container-fluid">
-    <!-- Logo -->
-    <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="{{ asset('images/LOGO1.png') }}" alt="Logo" width="124" height="36" class="d-inline-block align-text-top">
-    </a>
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+        <div class="container-fluid">
+          <!-- Logo -->
+          <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
+              <img src="{{ asset('images/LOGO1.png') }}" alt="Logo" width="124" height="36" class="d-inline-block align-text-top">
+          </a>
 
-    <!-- Botão Toggle (para Mobile) -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+          <!-- Botão Hamburger -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-    <!-- Itens da Navbar -->
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav"> <!-- Centraliza os itens do menu -->
-        <li class="nav-item px-3">
-            <a class="nav-link" href="{{ route('gatos') }}">Gatos</a>
-        </li>
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Cães</a>
-        </li>
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Doe</a>
-        </li>
-      </ul>
+          <!-- Itens do menu -->
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item px-2">
+                  <a class="nav-link" href="{{ route('animais.index') }}">Animais</a>
+              </li>
+              <li class="nav-item px-2">
+                  <a class="nav-link" href="{{ route('doacao') }}">Doar</a>
+              </li>
+              <li class="nav-item px-2">
+                  <a class="nav-link" href="#sobre-nos">Sobre Nós</a>
+              </li>
+              <li class="nav-item px-2">
+                  <a class="nav-link" href="#contacto">Contacto</a>
+              </li>
+              @auth
+    @if(auth()->user()->is_admin)
+        <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-dark me-2">
+            Administração
+        </a>
+    @endif
+@endauth
 
-      <!-- Botões alinhados à direita -->
-      <div class="d-flex ms-auto align-items-center">
-        <a href="{{ route('login') }}" class="btn me-2 p-2" style="border: 1px solid #D9D9D9;">Login</a>
-        <a href="{{ route('register') }}" class="btn p-2 text-white" style="background-color:#FE5101;">Criar conta</a>
-    </div>
-    </div>
-  </div>
-</nav>
+            </ul>
+
+            <!-- Botões à direita -->
+            <div class="d-flex align-items-center">
+                @auth
+                    <a href="{{ route('wishlist') }}" class="btn wishlist-btn me-2" title="Ver Wishlist">
+                        ❤️
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline-primary me-2">Área Pessoal</a>
+
+                @endauth
+              @guest
+                <a href="{{ route('login') }}" class="btn btn-outline-secondary me-2">Login</a>
+                <a href="{{ route('register') }}" class="btn text-white" style="background-color:#FE5101;">Criar conta</a>
+              @else
+                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger">Logout</button>
+                </form>
+              @endguest
+            </div>
+          </div>
+        </div>
+      </nav>
+
 
   <section class="hero text-center text-lg-start">
         <div class="container">
@@ -102,8 +141,8 @@
                 <div class="col-md-3">
                     <select class="form-select">
                         <option selected>Localização</option>
-                        <option>Lisboa, Portugal</option>
-                        <option>Porto, Portugal</option>
+                        <option>Lisboa</option>
+                        <option>Porto</option>
                     </select>
                 </div>
                 <div class="col-md-2">
@@ -123,7 +162,7 @@
                 <div class="col-md-2">
                     <select class="form-select">
                         <option selected>Idade</option>
-                        <option>Filhote</option>
+                        <option>Jovem</option>
                         <option>Adulto</option>
                     </select>
                 </div>
@@ -167,6 +206,43 @@
         </div>
     </section>
 
+<!-- Secção: Sobre Nós -->
+<section id="sobre-nos" class="py-5" style="background-color: #fff4ec;">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h2 class="mb-4" style="color: #FE5101;">Sobre Nós</h2>
+                <p class="lead">
+                    A Adoptable é uma organização sem fins lucrativos que tem como missão resgatar, cuidar e encontrar um lar para animais abandonados em todo o país.
+                </p>
+                <p>
+                    Acreditamos que todos os animais merecem amor, carinho e uma segunda oportunidade. Com a ajuda de voluntários e doações, garantimos que cada animal receba os cuidados que merece até encontrar a sua família ideal.
+                </p>
+                <p class="fw-bold" style="color:#FE5101;">Juntos, podemos mudar vidas — uma adoção de cada vez.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Secção: Contacto -->
+<section id="contacto" class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h2 class="mb-4" style="color: #FE5101;">Contacto</h2>
+                <p class="mb-1"><strong>Email:</strong> <a href="mailto:info@adoptable.pt" class="text-decoration-none text-dark">info@adoptable.pt</a></p>
+                <p class="mb-1"><strong>Telefone:</strong> <span class="text-dark">+351 912 345 678</span></p>
+                <p class="mb-3"><strong>Morada:</strong> Rua dos Animais Felizes, nº 123, Coimbra</p>
+
+                <div class="d-flex justify-content-center gap-3 mt-3">
+                    <a href="#" class="btn btn-outline-dark btn-sm" target="_blank">Facebook</a>
+                    <a href="#" class="btn btn-outline-dark btn-sm" target="_blank">Instagram</a>
+                    <a href="#" class="btn btn-outline-dark btn-sm" target="_blank">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
 <footer class="bg-light py-4">
@@ -181,8 +257,7 @@
                 <div class="col-md-3 mb-3">
                     <h6 class="fw-bold">Adotar</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted text-decoration-none">Gatos</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Cães</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Animais</a></li>
                     </ul>
                 </div>
 
