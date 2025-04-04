@@ -1,61 +1,53 @@
-<!-- resources/views/admin/dashboard.blade.php -->
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <title>Painel de Admin - Adoptable</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .card-hover:hover {
-            background-color: #f1f1f1;
-            transition: 0.3s;
-        }
-    </style>
-</head>
-<body>
-    <div class="container py-5">
-        <h2 class="mb-4 text-center text-primary">Painel de Administração</h2>
+@section('title', 'Painel de Administração')
 
-        @if(session('status'))
-            <div class="alert alert-success text-center">
-                {{ session('status') }}
-            </div>
-        @endif
+@section('content')
+    <!-- Hero Admin -->
+    <section class="py-5 text-white" style="background: linear-gradient(to right, #FE5101, #ff7a3d);">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold">Painel de Administração</h1>
+            <p class="lead">Gestão completa do sistema Adoptable 🛠️</p>
+        </div>
+    </section>
 
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <a href="{{ route('admin.animais.index') }}" class="text-decoration-none">
-                    <div class="card card-hover shadow-sm">
+    <!-- Painel de Cards -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0 h-100">
                         <div class="card-body text-center">
-                            <h5 class="card-title">🐾 Gerir Animais</h5>
-                            <p class="card-text text-muted">Ver, editar ou remover animais disponíveis para adoção.</p>
+                            <i class="bi bi-paw fs-1 text-primary"></i>
+                            <h5 class="mt-3">Animais</h5>
+                            <p class="text-muted">Adicionar, editar ou remover animais disponíveis para adoção.</p>
+                            <a href="{{ route('admin.animais.index') }}" class="btn btn-outline-primary">Gerir Animais</a>
                         </div>
                     </div>
-                </a>
-            </div>
+                </div>
 
-            <div class="col-md-4 mt-4 mt-md-0">
-                <a href="{{ route('home') }}" class="text-decoration-none">
-                    <div class="card card-hover shadow-sm">
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0 h-100">
                         <div class="card-body text-center">
-                            <h5 class="card-title">🏠 Voltar ao Site</h5>
-                            <p class="card-text text-muted">Regressar à página inicial do website.</p>
+                            <i class="bi bi-people-fill fs-1 text-secondary"></i>
+                            <h5 class="mt-3">Utilizadores</h5>
+                            <p class="text-muted">Ver utilizadores registados e gerir permissões.</p>
+                            <a href="#" class="btn btn-outline-secondary">Gerir Utilizadores</a>
                         </div>
                     </div>
-                </a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-envelope-fill fs-1 text-danger"></i>
+                            <h5 class="mt-3">Mensagens</h5>
+                            <p class="text-muted">Ler mensagens enviadas através do formulário de adoção.</p>
+                            <a href="{{ route('admin.mensagens.index') }}" class="btn btn-outline-danger">Ver Mensagens</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="text-center mt-5">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn btn-outline-danger">Terminar Sessão</button>
-            </form>
-        </div>
-    </div>
-</body>
-</html>
+    </section>
+@endsection

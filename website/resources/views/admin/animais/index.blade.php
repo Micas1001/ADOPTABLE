@@ -1,53 +1,68 @@
-<!-- resources/views/admin/animais/index.blade.php -->
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <title>Gestão de Animais - Admin</title>
-    <link href="https://https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container py-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="text-primary">Animais para Adoção</h2>
-            <a href="{{ route('admin.animais.create') }}" class="btn btn-success">+ Adicionar Animal</a>
-        </div>
+@section('title', 'Gestão de Animais')
 
+@section('content')
+<section class="py-5 text-center" style="background-color: #FE5101; color: white;">
+    <div class="container">
+        <h1 class="display-5 fw-bold">Gestão de Animais</h1>
+        <a href="{{ route('admin.animais.create') }}" class="btn btn-light mt-3">➕ Adicionar Novo Animal</a>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
         @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
+            <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        @if($animais->count())
-            <div class="row">
-                @foreach($animais as $animal)
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            @if($animal->imagem)
-                                <img src="{{ asset('storage/' . $animal->imagem) }}" class="card-img-top" alt="Imagem de {{ $animal->nome }}" style="object-fit: cover; height: 250px;">
-                            @endif
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $animal->nome }}</h5>
-                                <p class="card-text"><strong>Tipo:</strong> {{ ucfirst($animal->tipo) }}</p>
-                                <p class="card-text">{{ Str::limit($animal->descricao, 100) }}</p>
-                            </div>
-                            <div class="card-footer d-flex justify-content-between">
-                                <a href="{{ route('admin.animais.edit', $animal->id) }}" class="btn btn-sm btn-primary">Editar</a>
-                                <form action="{{ route('admin.animais.destroy', $animal->id) }}" method="POST">
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Imagem</th>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Raça</th>
+                        <th>Sexo</th>
+                        <th>Idade</th>
+                        <th>Localização</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($animais as $animal)
+                        <tr>
+                            <td>
+                                @if($animal->imagem)
+                                    <img src="{{ asset('storage/' . $animal->imagem) }}" alt="{{ $animal->nome }}" width="80" class="img-thumbnail">
+                                @else
+                                    <img src="https://via.placeholder.com/80x60" alt="Sem imagem" class="img-thumbnail">
+                                @endif
+                            </td>
+                            <td>{{ $animal->nome }}</td>
+                            <td>{{ ucfirst($animal->tipo) }}</td>
+                            <td>{{ $animal->raca }}</td>
+                            <td>{{ ucfirst($animal->sexo) }}</td>
+                            <td>{{ ucfirst($animal->idade) }}</td>
+                            <td>{{ $animal->localizacao }}</td>
+                            <td>
+                                <a href="{{ route('admin.animais.edit', $animal->id) }}" class="btn btn-sm btn-primary mb-1">✏️ Editar</a>
+                                <form action="{{ route('admin.animais.destroy', $animal->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem a certeza que deseja apagar este animal?')">Apagar</button>
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem a certeza que deseja eliminar este animal?')">🗑️ Eliminar</button>
                                 </form>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        @else
-            <div class="alert alert-info">Nenhum animal encontrado.</div>
-        @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center">Nenhum animal registado.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
-</body>
-</html>
+</section>
+@endsection

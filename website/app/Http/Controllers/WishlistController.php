@@ -17,19 +17,13 @@ class WishlistController extends Controller
             // Aqui vamos adicionar ou remover o animal da wishlist do usuário
             $user = auth()->user();
 
-            if ($user->wishlist->contains($animalId)) {
-                // Remove da wishlist
+            if ($user->wishlist()->where('animal_id', $animalId)->exists()) {
                 $user->wishlist()->detach($animalId);
+                return redirect()->back()->with('success', 'Animal removido da wishlist!');
             } else {
-                // Adiciona à wishlist
                 $user->wishlist()->attach($animalId);
+                return redirect()->back()->with('success', 'Animal adicionado à wishlist!');
             }
-
-            // Retorna uma resposta para o front-end
-            return response()->json([
-                'success' => true,
-                'message' => 'Wishlist atualizada com sucesso!'
-            ]);
         }
 
         return response()->json([

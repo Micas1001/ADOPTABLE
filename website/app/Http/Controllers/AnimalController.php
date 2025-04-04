@@ -8,15 +8,31 @@ use Illuminate\Support\Facades\Storage;
 
 class AnimalController extends Controller
 {
-    /**
-     * Mostra a lista de animais, com opção de filtro por tipo (cão/gato).
-     */
     public function index(Request $request)
     {
-        $tipo = $request->query('tipo'); // Obtém o tipo do animal da pesquisa
-        $animais = Animal::when($tipo, function ($query) use ($tipo) {
-            return $query->where('tipo', $tipo);
-        })->get();
+        $query = Animal::query();
+
+        if ($request->filled('tipo')) {
+            $query->where('tipo', $request->tipo);
+        }
+
+        if ($request->filled('raca')) {
+            $query->where('raca', 'like', '%' . $request->raca . '%');
+        }
+
+        if ($request->filled('sexo')) {
+            $query->where('sexo', $request->sexo);
+        }
+
+        if ($request->filled('idade')) {
+            $query->where('idade', $request->idade);
+        }
+
+        if ($request->filled('localizacao')) {
+            $query->where('localizacao', $request->localizacao);
+        }
+
+        $animais = $query->paginate(9);
 
         return view('animais.index', compact('animais'));
     }
@@ -67,31 +83,37 @@ class AnimalController extends Controller
     /**
      * Atualiza os dados do animal.
      */
-    public function update(Request $request, Animal $animal)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'nome' => 'required|string|max:255',
-            'descricao' => 'required|string',
-            'tipo' => 'required|in:cão,gato',
-            'imagem' => 'nullable|image|max:2048'
+            'tipo' => 'required',
+            'raca' => 'required|string|max:255',
+            'sexo' => 'required',
+            'idade' => 'required',
+            'localizacao' => 'required',
+            'imagem' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
+
+        $animal = Animal::findOrFail($id);
+
+        $animal->nome = $request->nome;
+        $animal->tipo = $request->tipo;
+        $animal->raca = $request->raca;
+        $animal->sexo = $request->sexo;
+        $animal->idade = $request->idade;
+        $animal->localizacao = $request->localizacao;
 
         if ($request->hasFile('imagem')) {
-            if ($animal->imagem) {
-                Storage::disk('public')->delete($animal->imagem);
-            }
-            $imagemPath = $request->file('imagem')->store('animals', 'public');
-            $animal->imagem = $imagemPath;
+            $path = $request->file('imagem')->store('animais', 'public');
+            $animal->imagem = $path;
         }
 
-        $animal->update([
-            'nome' => $request->nome,
-            'descricao' => $request->descricao,
-            'tipo' => $request->tipo,
-        ]);
+        $animal->save();
 
-        return redirect()->route('animais.index')->with('success', 'Animal atualizado com sucesso!');
+        return redirect()->route('admin.animais.index')->with('success', 'Animal atualizado com sucesso.');
     }
+
 
     /**
      * Remove um animal da base de dados.

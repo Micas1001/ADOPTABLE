@@ -1,72 +1,17 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <title>Doar - Adoptable</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f9f9f9;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        header {
-            background-color: #FE5101;
-            padding: 15px 30px;
-            display: flex;
-            align-items: center;
-        }
-        header img {
-            height: 50px;
-        }
-        main {
-            max-width: 800px;
-            margin: 40px auto;
-            background-color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #FE5101;
-            margin-bottom: 20px;
-        }
-        .mbway, .transferencia {
-            background-color: #fff4ec;
-            border-left: 5px solid #FE5101;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-        }
-        footer {
-            background-color: #FE5101;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 60px;
-        }
-    </style>
-</head>
-<body>
+@extends('layouts.app')
 
-    <header>
-        <a href="{{ route('home') }}">
-            <img src="{{ asset('images/LOGO1.png') }}" alt="Adoptable Logo">
-        </a>
-        <h1 class="text-white text-center flex-grow-1 m-0" style="font-size: 1.8rem;">
-            Doar para a Adoptable
-        </h1>
+@section('title', 'Doar - Adoptable')
 
-        <!-- Espaço à direita para equilibrar -->
-        <div style="width: 120px;"></div>
-    </header>
+@section('content')
+    <!-- Seção de Doação -->
+    <section class="py-5 text-center" style="background-color: #FE5101; color: white;">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Ajude-nos a salvar vidas</h1>
+            <p class="lead">Sua contribuição ajuda a cuidar e a encontrar lares para muitos animais em necessidade.</p>
+        </div>
+    </section>
 
-    <main>
-        <h1>Ajuda-nos a mudar vidas 🧡</h1>
-        <p class="lead">
-            Com a tua contribuição, conseguimos alimentar, tratar e encontrar um lar para muitos animais que precisam de amor e cuidado. Qualquer valor faz a diferença!
-        </p>
-
+    <section class="py-5">
         <div class="mbway">
             <h4>💳 MB WAY</h4>
             <p><strong>Número:</strong> <span class="text-dark">912 345 678</span></p>
@@ -82,13 +27,7 @@
         </div>
 
         <p class="text-muted fst-italic">
-            Envia-nos o comprovativo para <strong>doacoes@adoptable.pt</strong> se desejares recibo ou para sabermos quem agradecer. Obrigado por estares connosco! 💛
+            Envia-nos o comprovativo para <strong>contacto@adoptable.pt</strong> se desejares recibo ou para sabermos quem agradecer. Obrigado por estares connosco! 💛
         </p>
-    </main>
-
-    <footer>
-        <p>&copy; {{ date('Y') }} Adoptable. Juntos por um futuro com mais amor animal.</p>
-    </footer>
-
-</body>
-</html>
+    </section>
+@endsection
