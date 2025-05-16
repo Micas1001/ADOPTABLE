@@ -1,7 +1,7 @@
 <section class="mb-5">
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <h2 class="h5 mb-3 text-danger">
+    <div class="">
+        <div class="">
+            <h2 class="h5 mb-3 text-danger fw-bold">
                 {{ __('Eliminar Conta') }}
             </h2>
 
