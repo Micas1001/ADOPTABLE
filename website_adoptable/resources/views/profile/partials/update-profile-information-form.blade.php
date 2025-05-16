@@ -1,7 +1,7 @@
 <section class="mb-5">
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <h2 class="h5 mb-3 text-primary">
+    <div >
+        <div >
+            <h2 class="h5 mb-3 fw-bold">
                 {{ __('Informação de Perfil') }}
             </h2>
 
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="d-flex align-items-center">
-                    <button type="submit" class="btn btn-primary">{{ __('Guardar') }}</button>
+                    <button type="submit" class="btn btn-orange">{{ __('Guardar') }}</button>
 
                     @if (session('status') === 'profile-updated')
                         <p class="text-success ms-3 mb-0">{{ __('Guardado.') }}</p>
