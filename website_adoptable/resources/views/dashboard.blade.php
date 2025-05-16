@@ -10,7 +10,7 @@
       Área Pessoal
     </h2>
     <p class="text-center text-muted mb-5">
-      Bem-vindo à sua área pessoal. Aqui você pode gerenciar seu perfil, histórico de adoções e muito mais.
+      Bem-vindo à sua área pessoal. Aqui você pode gerir o seu perfil, histórico de adoções e muito mais.
     </p>
 
     <div class="row g-4 justify-content-center">
