@@ -1,0 +1,72 @@
+html {
+    scroll-behavior: smooth;
+}
+
+
+
+
+
+
+.hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.orange-section {
+    background-color: #FF6600;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    height: 100vh;
+    text-align: left;
+    padding-left: 10%;
+}
+.search-box { 
+    position: absolute;
+    bottom: 5%;
+    left: 10%;
+    width: 80%;
+}
+.button{
+    background-color: #FF6600;
+    color: white;
+}
+
+.button:hover {
+    background-color: #e44d00;
+    color: white;
+}
+.full-height {
+    height: 100vh;
+}
+
+.card:hover {
+transform: scale(1.02);
+transition: all 0.2s ease-in-out;
+}
+
+.btn-orange {
+background-color: #FE5101;
+color: white;
+}
+
+.btn-orange:hover {
+background-color: #e44d00;
+color: white;
+}
+
+
+/* Efeito de Hover nos Links */
+.footer-link:hover {
+
+    transform: scale(1.02);
+    transition: all 0.2s ease-in-out;
+
+}
+
+
+
