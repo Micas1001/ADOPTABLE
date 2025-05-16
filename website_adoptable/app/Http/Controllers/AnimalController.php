@@ -29,10 +29,10 @@ class AnimalController extends Controller
         }
 
         if ($request->filled('localizacao')) {
-            $query->where('localizacao', $request->localizacao);
+            $query->where('localizacao', 'like', '%' . $request->localizacao . '%');
         }
 
-        $animais = $query->paginate(9);
+        $animais = $query->latest()->paginate(8);
 
         return view('animais.index', compact('animais'));
     }
