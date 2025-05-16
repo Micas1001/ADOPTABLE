@@ -44,7 +44,7 @@
                                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                             </div>
 
-                            <button type="submit" class="btn btn-success w-100">Criar Conta</button>
+                            <button type="submit" class="btn btn-orange w-100">Criar Conta</button>
                         </form>
 
                         <div class="text-center mt-3">
