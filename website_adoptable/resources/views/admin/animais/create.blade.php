@@ -57,12 +57,7 @@
 
                             <div class="mb-3">
                                 <label for="localizacao" class="form-label">Localização</label>
-                                <select class="form-select" id="localizacao" name="localizacao" required>
-                                    <option value="">Escolha...</option>
-                                    <option value="Coimbra" {{ old('localizacao') == 'Coimbra' ? 'selected' : '' }}>Coimbra</option>
-                                    <option value="Lisboa" {{ old('localizacao') == 'Lisboa' ? 'selected' : '' }}>Lisboa</option>
-                                    <option value="Porto" {{ old('localizacao') == 'Porto' ? 'selected' : '' }}>Porto</option>
-                                </select>
+                                <input type="text" name="localizacao" class="form-control form-control-lg" placeholder="Digite a localização" required>
                             </div>
 
                             <div class="mb-3">
