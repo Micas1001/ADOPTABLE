@@ -10,14 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        .footer-link:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
 @if(session('success'))
@@ -38,59 +31,62 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm">
-        <div class="container-fluid">
+   <nav class="navbar navbar-expand-lg p-3 bg-white shadow-sm">
+    <div class="container-fluid">
+        <!-- Mobile Menu Button (visible on small screens) -->
+        <button class="btn me-2 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+            <i class="bi bi-list fs-2"></i>
+        </button>
 
-            <button class="btn me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
-                <i class="bi bi-list fs-2"></i>
-            </button>
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
+            <img src="{{ asset('images/LOGO1.png') }}" alt="Logo" width="124" height="36" class="d-inline-block align-text-top">
+        </a>
 
-            <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                <img src="{{ asset('images/LOGO1.png') }}" alt="Logo" width="124" height="36" class="d-inline-block align-text-top">
-            </a>
+        <!-- Navbar Links for large screens -->
+        <div class="collapse navbar-collapse d-none d-lg-flex ms-auto">
+            <ul class="navbar-nav">
+                <li class="nav-item px-3">
+                    <a class="nav-link" href="{{ route('animais.index') }}">Animais</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link" href="{{ route('doacao') }}">Doar</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link" href="{{ route('sobrenos') }}">Sobre Nós</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link" href="{{ route('contacto') }}">Contacto</a>
+                </li>
+            </ul>
 
-
-
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item px-3">
-                        <a class="nav-link" href="{{ route('animais.index') }}">Animais</a>
-                    </li>
-                    <li class="nav-item px-3">
-                        <a class="nav-link" href="{{ route('doacao') }}">Doar</a>
-                    </li>
-                    <li class="nav-item px-3">
-                        <a class="nav-link" href="{{ route('sobrenos') }}">Sobre Nós</a>
-                    </li>
-                    <li class="nav-item px-3">
-                        <a class="nav-link" href="{{ route('contacto') }}">Contacto</a>
-                    </li>
-                    @auth
-    @if(auth()->user()->is_admin)
-        <a href="{{ route('admin.animais.index') }}" class="btn btn-warning ms-2">ADMIN</a>
-    @endif
-@endauth
-
-                </ul>
-
-                <div class="d-flex ms-auto align-items-center">
-                    @auth
-                        <a href="{{ route('wishlist') }}" class="btn btn-outline-danger me-2" title="Wishlist">❤️</a>
-                        <a href="{{ route('dashboard') }}" class="btn btn-outline-primary me-2">Área Pessoal</a>
-                        <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-secondary">Logout</button>
-                        </form>
-                    @endauth
-
-                    @guest
-                        <a href="{{ route('login') }}" class="btn me-2 p-2" style="border: 1px solid #D9D9D9;">Login</a>
-                        <a href="{{ route('register') }}" class="btn p-2 text-white" style="background-color:#FE5101;">Criar conta</a>
-                    @endguest
-                </div>
+            <!-- User Account and Wishlist for large screens -->
+            <div class="d-flex ms-auto align-items-center">
+                @auth
+                    <!-- Wishlist Icon -->
+                    <a href="{{ route('wishlist') }}" class="btn btn-link text-danger me-3" title="Wishlist">
+                        <i class="bi bi-heart fs-3"></i> <!-- Usando ícone de coração -->
+                    </a>
+                    <!-- Personal Area -->
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline me-3">Área Pessoal</a>
+                    <!-- Logout Button -->
+                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-outline">Logout</button>
+                    </form>
+                    <!-- Admin Button (visible only for admin users) -->
+                    @if(auth()->user()->is_admin)
+                        <a href="{{ route('admin.animais.index') }}" class="btn btn-warning ms-3">ADMIN</a>
+                    @endif
+                @else
+                    <!-- Login and Register Buttons -->
+                    <a href="{{ route('login') }}" class="btn me-3 p-2" style="border: 1px solid #D9D9D9;">Login</a>
+                    <a href="{{ route('register') }}" class="btn p-2 text-white" style="background-color:#FE5101;">Criar conta</a>
+                @endguest
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
         <div class="offcanvas-header">
@@ -123,7 +119,7 @@
       </div>
 
     <!-- Conteúdo dinâmico -->
-    <main class="container py-5">
+    <main>
         @yield('content')
     </main>
 
@@ -148,10 +144,10 @@
                 </div>
 
                 <div class="col-md-4 mb-4" id="contacto">
-                    <h6 class="fw-bold">Contacto</h6>
-                    <p class="mb-1">Email: contactoadoptable@gmail.com</p>
-                    <p class="mb-1">Telefone: 912 345 678</p>
-                    <p class="mb-0">São Martinho do Bispo, Coimbra</p>
+                  <h6 class="fw-bold">Contacto</h6>
+                    <p class="mb-1"><i class="bi bi-envelope"></i> Email: contactoadoptable@gmail.com</p>
+                    <p class="mb-1"><i class="bi bi-phone"></i> Telefone: 912 345 678</p>
+                    <p class="mb-0"><i class="bi bi-geo-alt"></i> São Martinho do Bispo, Coimbra</p>
                 </div>
             </div>
             <hr style="border-color: rgba(255,255,255,0.3);">
