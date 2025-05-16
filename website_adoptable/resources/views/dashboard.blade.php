@@ -3,17 +3,52 @@
 @section('title', 'Área Pessoal')
 
 @section('content')
-<section class="py-5 text-white" style="background-color: #FE5101;">
-    <div class="container text-center">
-        <h1 class="display-4 fw-bold">Bem-vindo à Sua Área Pessoal</h1>
-        <p class="lead">Aqui pode gerir os seus dados e os animais que partilhou para adoção.</p>
-        <a href="{{ route('animais.user.create') }}" class="btn btn-light btn-lg mt-3">
-            ➕ Registar Novo Animal
-        </a>
-        <a href="{{ route('profile.edit') }}" class="btn btn-outline-light btn-lg mt-3 ms-2">
-            ✏️ Editar Dados Pessoais
-        </a>
-    </div>
+<section class="py-5 text-white">
+  <div class="container">
+    <h2 class=" display-5 fw-bold section-title text-center text-dark mb-3">
+      <i class="bi bi-house-door" style="color: #FE5101;"></i>
+      Área Pessoal
+    </h2>
+    <p class="text-center text-muted mb-5">
+      Bem-vindo à sua área pessoal. Aqui você pode gerenciar seu perfil, histórico de adoções e muito mais.
+    </p>
+
+    <div class="row g-4 justify-content-center">
+      {{-- Card Perfil --}}
+      <div class="col-md-4">
+        <div class="card h-100 d-flex flex-column shadow-sm border-0 rounded-lg" style="min-height: 300px;">
+          <div class="card-header" style="background-color: #FE5101; color: white;">
+            <i class="bi bi-person-circle me-2"></i> Perfil
+          </div>
+          <div class="card-body text-center" style="background-color: #fff;">
+            <h5 class="fw-bold text-dark">{{ Auth::user()->name }}</h5>
+            <p class="text-muted mb-1">Email: {{ Auth::user()->email }}</p>
+            <a href="{{ route('profile.edit') }}"
+               class="btn btn-orange btn-lg mt-auto align-self-center w-75 mb-3">
+              <i class="bi bi-pencil me-1"></i> Editar Perfil
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {{-- Card Partilhar Animal --}}
+      <div class="col-md-4">
+        <div class="card h-100 d-flex flex-column shadow-sm border-0 rounded-lg" style="min-height: 300px;">
+          <div class="card-header" style="background-color: #FE5101; color: white;">
+            <i class="bi bi-heart me-2"></i> Partilhar Animal
+          </div>
+          <div class="card-body text-center" style="background-color: #fff;">
+            <p class="flex-grow-1 text-muted">
+              Se encontrou ou está a cuidar de um animal, pode registá-lo para que alguém o adote.
+            </p>
+            <a href="{{ route('animais.user.create') }}"
+               class="btn btn-orange btn-lg w-75 mb-3 align-self-center">
+              <i class="bi bi-plus-circle me-1"></i> Registar Novo Animal
+            </a>
+          </div>
+        </div>
+      </div>
+
 </section>
 
 <section class="py-5 bg-light">
