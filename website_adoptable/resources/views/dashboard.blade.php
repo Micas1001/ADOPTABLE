@@ -69,7 +69,7 @@
                             <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Sem imagem">
                         @endif
                         <div class="card-body">
-                            <h5 class="card-title text-primary fw-bold">{{ $animal->nome }}</h5>
+                            <h5 class="card-title  fw-bold">{{ $animal->nome }}</h5>
                             <ul class="list-unstyled small mb-3">
                                 <li><strong>Idade:</strong> {{ $animal->idade }}</li>
                                 <li><strong>Sexo:</strong> {{ $animal->sexo }}</li>
