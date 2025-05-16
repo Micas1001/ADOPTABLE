@@ -11,43 +11,53 @@
 @endif
 
 <section class="py-5">
-    <div class="container">
+ <div class="container">
         <div class="row">
             <!-- Imagem -->
             <div class="col-md-6 text-center">
                 @if($animal->imagem)
-                    <img src="{{ asset('storage/' . $animal->imagem) }}" class="img-fluid rounded shadow w-100" style="max-height: 500px; object-fit: cover; alt="{{ $animal->nome }}>
+                    <img src="{{ asset('storage/' . $animal->imagem) }}" class="img-fluid rounded shadow-lg mb-4" alt="{{ $animal->nome }}" style="max-height: 400px; object-fit: cover;">
                 @else
-                    <img src="https://via.placeholder.com/500x350" class="img-fluid rounded shadow" alt="Sem imagem">
+                    <img src="https://via.placeholder.com/500x350" class="img-fluid rounded shadow-lg mb-4" alt="Sem imagem" style="max-height: 400px; object-fit: cover;">
                 @endif
             </div>
 
             <!-- Informações -->
             <div class="col-md-6 mt-4 mt-md-0">
-                <h2 class="fw-bold">{{ $animal->nome }}</h2>
-                <p><strong>Idade:</strong> {{ $animal->idade }}</p>
-                <p><strong>Sexo:</strong> {{ $animal->sexo }}</p>
-                <p><strong>Raça:</strong> {{ $animal->raca }}</p>
-                <p><strong>Localização:</strong> {{ $animal->localizacao }}</p>
-                @if ($animal->user)
-                <p><strong>Anunciado por:</strong> {{ $animal->user->name }}</p>
-                @endif
-                <p class="mt-3">{{ $animal->descricao }}</p>
+                <h2 class="fw-bold mb-4">{{ $animal->nome }}</h2>
+                <div class="mb-3">
+                    <p><strong>Idade:</strong> {{ $animal->idade }}</p>
+                    <p><strong>Sexo:</strong> {{ $animal->sexo }}</p>
+                    <p><strong>Raça:</strong> {{ $animal->raca }}</p>
+                    <p><strong>Localização:</strong> {{ $animal->localizacao }}</p>
+                    @if ($animal->user)
+                        <p><strong>Anunciado por:</strong> {{ $animal->user->name }}</p>
+                    @endif
+                </div>
 
-                <div class="mt-4 d-flex gap-2">
-                    @auth
+                <p class="mt-3 mb-4">{{ $animal->descricao }}</p>
+
+                <div class="mt-4 d-flex gap-3">
                     <form action="{{ route('wishlist.toggle') }}" method="POST" class="d-inline">
-                    @csrf
-                    <input type="hidden" name="animal_id" value="{{ $animal->id }}">
-                    <button type="submit" class="wishlist-btn" title="Adicionar aos favoritos"> 💖 </button>
-                     </form>
-                       @else
-                       <button class="wishlist-btn border-0 bg-transparent" title="Adicionar aos favoritos">
-                        💖
-                    </button>
-
+                        @csrf
+                        <input type="hidden" name="animal_id" value="{{ $animal->id }}">
+                        @auth
+                            @if(auth()->user()->wishlist->contains($animal->id)) <!-- Verifica se o animal está na wishlist -->
+                                <button type="submit" class="btn btn-orange rounded-pill px-4" title="Remover dos favoritos">
+                                    <i class="bi bi-heart-fill" style="font-size: 1.25rem;"></i> Remover da Wishlist
+                                </button>
+                            @else
+                                <button type="submit" class="btn btn-orange rounded-pill px-4" title="Adicionar aos favoritos">
+                                    <i class="bi bi-heart" style="font-size: 1.25rem;"></i> Adicionar à Wishlist
+                                </button>
+                            @endif
+                        @else
+                            <button type="button" class="btn btn-orange rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#loginModal" title="Favoritos">
+                                <i class="bi bi-heart" style="font-size: 1.25rem;"></i> Adicionar à Wishlist
+                            </button>
                         @endauth
-                    <a href="{{ route('animais.index') }}" class="btn btn-secondary">⬅ Voltar</a>
+                    </form>
+                    <a href="{{ route('animais.index') }}" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-arrow-left"></i> Voltar</a>
                 </div>
             </div>
         </div>
@@ -55,9 +65,12 @@
         <!-- Formulário de Adoção -->
         <div class="row mt-5">
             <div class="col-md-8 offset-md-2">
-                <h3 class="mb-4 text-center">📄 Candidatura para Adotar o {{ $animal->nome }}</h3>
+                <div class="text-center mb-4">
 
-                <form action="{{ route('adocao.enviar') }}" method="POST">
+                    <h3 class="mb-4 text-center"><i class="bi bi-pencil-square fs-4 me-2"></i> Candidatura para Adotar o {{ $animal->nome }}</h3>
+                    <p class="text-muted">Preencha o formulário abaixo para manifestar seu interesse na adoção e contar-nos mais sobre sua disponibilidade e plano para o animal.</p>
+                </div>
+                <form action="{{ route('adocao.enviar') }}" method="POST"  class="shadow-sm p-4 rounded" style="background-color: #fff8f1;">
                     @csrf
                     <input type="hidden" name="animal_id" value="{{ $animal->id }}">
 
@@ -68,28 +81,30 @@
 
                     <div class="mb-3">
                         <label for="nome">O seu nome</label>
-                        <input type="text" class="form-control" name="nome" required>
+                        <input type="text" class="form-control" name="nome" placeholder="O seu nome completo" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail</label>
-                        <input type="email" name="email" class="form-control" required>
+                        <input type="email" name="email" placeholder="O seu nome email" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="telefone" class="form-label">Telefone</label>
-                        <input type="text" name="telefone" class="form-control">
+                        <input type="text" name="telefone" placeholder="O seu nome telefone" class="form-control">
                     </div>
 
                     <div class="mb-3">
                         <label for="mensagem" class="form-label">Porque quer adotar este animal?</label>
-                        <textarea name="mensagem" class="form-control" rows="4" required></textarea>
+                        <textarea name="mensagem" placeholder="Informe o porque deseja adotar esse bichinho, algumas informações sobre onde vai abrigá-lo e sua disponibilidade de espaço e tempo para dar a atenção e a qualidade de vida que ele precisa. Informe também um telefone para entrarmos em contato."
+                         class="form-control" rows="4" required></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-success w-100" style="background-color: #FE5101; border: none;">📬 Enviar Candidatura</button>
+                    <button type="submit" class="btn btn-success w-100 rounded-pill" style="background-color: #FE5101; border: none;"> Enviar Candidatura</button>
                 </form>
             </div>
         </div>
+
 
         <!-- Formulário de Avaliação -->
         <div class="row mt-5">
@@ -121,7 +136,7 @@
                                     @error('avaliacao')<div class="invalid-feedback">{{ $comment }}</div>@enderror
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Enviar Comentário</button>
+                                <button type="submit" class="btn btn-orange">Enviar Comentário</button>
                             </form>
                         </div>
                     </div>
@@ -157,20 +172,24 @@
 <!-- Modal de aviso -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-danger" id="loginModalLabel">Login necessário</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- Ícone de Alerta e Título -->
+                <i class="bi bi-exclamation-triangle-fill text-warning fs-2 me-3"></i>
+                <h5 class="modal-title " id="loginModalLabel">Login necessário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <p>É necessário iniciar sessão para adicionar um animal à sua wishlist. Por favor, faça login para continuar.</p>
+            </div>
+            <div class="modal-footer">
+                <!-- Botões de Ação -->
+                <a href="{{ route('login') }}" class="btn btn-orange rounded-pill px-4">Iniciar Sessão</a>
+                <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+            </div>
         </div>
-        <div class="modal-body">
-          É necessário iniciar sessão para adicionar um animal à sua wishlist.
-        </div>
-        <div class="modal-footer">
-          <a href="{{ route('login') }}" class="btn btn-primary">Iniciar Sessão</a>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
 
 @endsection
