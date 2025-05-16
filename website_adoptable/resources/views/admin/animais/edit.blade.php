@@ -58,12 +58,8 @@
 
                             <div class="mb-3">
                                 <label for="localizacao" class="form-label">Localização</label>
-                                <select class="form-select" id="localizacao" name="localizacao" required>
-                                    <option value="">Escolha...</option>
-                                    <option value="Coimbra" {{ old('localizacao', $animal->localizacao) == 'Coimbra' ? 'selected' : '' }}>Coimbra</option>
-                                    <option value="Lisboa" {{ old('localizacao', $animal->localizacao) == 'Lisboa' ? 'selected' : '' }}>Lisboa</option>
-                                    <option value="Porto" {{ old('localizacao', $animal->localizacao) == 'Porto' ? 'selected' : '' }}>Porto</option>
-                                </select>
+                                <input type="text" class="form-control" id="localizaçao" name="nome" value="{{ old('localizacao', $animal->localizacao) }}" required>
+
                             </div>
 
                             <div class="mb-3">
