@@ -33,7 +33,7 @@
                                 <label for="mensagem" class="form-label">Mensagem</label>
                                 <textarea class="form-control" id="mensagem" name="mensagem" rows="5" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Enviar mensagem</button>
+                            <button type="submit" class="btn btn-orange">Enviar mensagem</button>
                         </form>
                     </div>
                 </div>
