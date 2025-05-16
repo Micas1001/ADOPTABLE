@@ -43,7 +43,7 @@
                                 <label class="form-check-label" for="remember">Manter sessão iniciada</label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                            <button type="submit" class="btn btn-orange w-100">Entrar</button>
                         </form>
 
                         <div class="text-center mt-3">
